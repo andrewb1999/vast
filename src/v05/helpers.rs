@@ -39,8 +39,16 @@ impl Decl {
         Decl::Wire(name.to_string(), Ty::new_width(width))
     }
 
+    pub fn new_wire_parameterized(name: &str, width: Ty) -> Decl {
+        Decl::Wire(name.to_string(), width)
+    }
+
     pub fn new_reg(name: &str, width: u64) -> Decl {
         Decl::Reg(name.to_string(), Ty::new_width(width))
+    }
+
+    pub fn new_reg_parameterized(name: &str, width: Ty) -> Decl {
+        Decl::Reg(name.to_string(), width)
     }
 
     pub fn new_array(name: &str, width: u64, depth: u64) -> Decl {
