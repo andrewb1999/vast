@@ -416,3 +416,15 @@ fn test_module_with_instance_attribute() {
     let res = module.to_string();
     check!(res, exp);
 }
+
+#[test]
+fn test_param_array() {
+    let exp = read_to_string("regression/v05/param_array.v");
+    let mut module = Module::new("param_array");
+    module.add_param_uint("WIDTH", 32);
+    module.add_param_uint("DEPTH", 1024);
+    let arr = Decl::new_array_parameterized("ram", Ty::new_param("WIDTH"), Ty::new_param("DEPTH"));
+    module.add_decl(arr);
+    let res = module.to_string();
+    check!(res, exp);
+}

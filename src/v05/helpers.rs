@@ -17,6 +17,17 @@ impl Ty {
             _ => panic!("Error: type does not support width"),
         }
     }
+
+    pub fn new_param(param: &str) -> Ty {
+        Ty::Param(param.to_string())
+    }
+
+    pub fn is_parameterized(&self) -> bool {
+        match self {
+            Ty::Param(_) => true,
+            _ => false,
+        }
+    }
 }
 
 impl Decl {
@@ -34,6 +45,10 @@ impl Decl {
 
     pub fn new_array(name: &str, width: u64, depth: u64) -> Decl {
         Decl::Array(name.to_string(), Ty::new_width(width), Ty::new_width(depth))
+    }
+
+    pub fn new_array_parameterized(name: &str, width: Ty, depth: Ty) -> Decl {
+        Decl::Array(name.to_string(), width, depth)
     }
 
     pub fn new_param_uint(name: &str, value: u32) -> Decl {

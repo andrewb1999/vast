@@ -15,6 +15,10 @@ impl PrettyPrint for Ty {
                     .append(RcDoc::text("0"))
                     .brackets(),
             },
+            Ty::Param(p) => RcDoc::text(p)
+                            .append(RcDoc::text("-1:"))
+                            .append(RcDoc::text("0"))
+                            .brackets()
         }
     }
 }
@@ -49,14 +53,20 @@ impl PrettyPrint for Decl {
                     .append(RcDoc::as_string(name))
             }
             Decl::Array(name, width, depth) => {
-                let width_space = match width.width() {
-                    1 => RcDoc::nil(),
-                    _ => RcDoc::space(),
-                };
-                let depth_space = match depth.width() {
-                    1 => RcDoc::nil(),
-                    _ => RcDoc::space(),
-                };
+                let mut width_space = RcDoc::space();
+                let mut depth_space = RcDoc::space();
+                if !width.is_parameterized() {
+                    width_space = match width.width() {
+                        1 => RcDoc::nil(),
+                        _ => RcDoc::space(),
+                    };
+                }
+                if !depth.is_parameterized() {
+                    depth_space = match depth.width() {
+                        1 => RcDoc::nil(),
+                        _ => RcDoc::space(),
+                    };
+                }
                 RcDoc::text("reg")
                     .append(RcDoc::space())
                     .append(width.to_doc())

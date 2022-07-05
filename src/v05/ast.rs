@@ -21,6 +21,7 @@ pub enum Ty {
     Int,
     // maybe use nonzero64?
     Width(u64),
+    Param(String),
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
