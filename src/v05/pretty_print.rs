@@ -31,10 +31,13 @@ impl PrettyPrint for Decl {
                 .append(RcDoc::space())
                 .append(RcDoc::as_string(name)),
             Decl::Wire(name, ty) => {
-                let extra_space = match ty.width() {
-                    1 => RcDoc::nil(),
-                    _ => RcDoc::space(),
-                };
+                let mut extra_space = RcDoc::space();
+                if !ty.is_parameterized() {
+                    extra_space = match ty.width() {
+                        1 => RcDoc::nil(),
+                        _ => RcDoc::space(),
+                    };
+                }
                 RcDoc::text("wire")
                     .append(RcDoc::space())
                     .append(ty.to_doc())
@@ -42,10 +45,13 @@ impl PrettyPrint for Decl {
                     .append(RcDoc::as_string(name))
             }
             Decl::Reg(name, ty) => {
-                let extra_space = match ty.width() {
-                    1 => RcDoc::nil(),
-                    _ => RcDoc::space(),
-                };
+                let mut extra_space = RcDoc::space();
+                if !ty.is_parameterized() {
+                    extra_space = match ty.width() {
+                        1 => RcDoc::nil(),
+                        _ => RcDoc::space(),
+                    };
+                }
                 RcDoc::text("reg")
                     .append(RcDoc::space())
                     .append(ty.to_doc())
