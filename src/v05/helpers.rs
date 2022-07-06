@@ -79,9 +79,19 @@ impl Port {
         Port::Input(wire)
     }
 
+    pub fn new_input_parameterized(name: &str, width: Ty) -> Port {
+        let wire = Decl::Wire(name.to_string(), width);
+        Port::Input(wire)
+    }
+
     pub fn new_output(name: &str, width: u64) -> Port {
         let ty = Ty::Width(width);
         let wire = Decl::Wire(name.to_string(), ty);
+        Port::Output(wire)
+    }
+
+    pub fn new_output_parameterized(name: &str, width: Ty) -> Port {
+        let wire = Decl::Wire(name.to_string(), width);
         Port::Output(wire)
     }
 
@@ -89,6 +99,11 @@ impl Port {
         let ty = Ty::Width(width);
         let reg = Decl::Reg(name.to_string(), ty);
         Port::Output(reg)
+    }
+
+    pub fn new_output_reg_parameterized(name: &str, width: Ty) -> Port {
+        let wire = Decl::Reg(name.to_string(), width);
+        Port::Output(wire)
     }
 }
 
