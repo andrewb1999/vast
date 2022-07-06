@@ -79,8 +79,9 @@ impl Port {
         Port::Input(wire)
     }
 
-    pub fn new_input_parameterized(name: &str, width: Ty) -> Port {
-        let wire = Decl::Wire(name.to_string(), width);
+    pub fn new_input_parameterized(name: &str, width: &str) -> Port {
+        let ty = Ty::Param(width.to_string());
+        let wire = Decl::Wire(name.to_string(), ty);
         Port::Input(wire)
     }
 
@@ -90,8 +91,9 @@ impl Port {
         Port::Output(wire)
     }
 
-    pub fn new_output_parameterized(name: &str, width: Ty) -> Port {
-        let wire = Decl::Wire(name.to_string(), width);
+    pub fn new_output_parameterized(name: &str, width: &str) -> Port {
+        let ty = Ty::Param(width.to_string());
+        let wire = Decl::Wire(name.to_string(), ty);
         Port::Output(wire)
     }
 
@@ -101,8 +103,9 @@ impl Port {
         Port::Output(reg)
     }
 
-    pub fn new_output_reg_parameterized(name: &str, width: Ty) -> Port {
-        let wire = Decl::Reg(name.to_string(), width);
+    pub fn new_output_reg_parameterized(name: &str, width: &str) -> Port {
+        let ty = Ty::Param(width.to_string());
+        let wire = Decl::Reg(name.to_string(), ty);
         Port::Output(wire)
     }
 }
@@ -283,12 +286,24 @@ impl Module {
         self.ports.push(Port::new_input(name, width));
     }
 
+    pub fn add_input_parameterized(&mut self, name: &str, width: &str) {
+        self.ports.push(Port::new_input_parameterized(name, width));
+    }
+
     pub fn add_output(&mut self, name: &str, width: u64) {
         self.ports.push(Port::new_output(name, width));
     }
 
+    pub fn add_output_parameterized(&mut self, name: &str, width: &str) {
+        self.ports.push(Port::new_output_parameterized(name, width));
+    }
+
     pub fn add_output_reg(&mut self, name: &str, width: u64) {
         self.ports.push(Port::new_output_reg(name, width));
+    }
+
+    pub fn add_output_reg_parameterized(&mut self, name: &str, width: &str) {
+        self.ports.push(Port::new_output_reg_parameterized(name, width));
     }
 
     pub fn add_instance(&mut self, inst: Instance) {
